@@ -63,6 +63,12 @@ local backdrop_border = {
   insets = { left = 3, right = 3, top = 3, bottom = 3 }
 }
 
+local bar_border = {
+  edgeFile = "Interface\\BUTTONS\\WHITE8X8",
+  tile = true, tileSize = 16, edgeSize = 16,
+  insets = { left = 3, right = 3, top = 3, bottom = 3 }
+}
+
 -- templates describing the window contents
 local view_templates = {
   [1] = { -- damage
@@ -311,6 +317,14 @@ local function CreateBar(parent, i, background)
   parent.bars[i]:SetHeight(config.height - config.spacing)
   parent.bars[i]:SetFrameLevel(4)
 
+  parent.bars[i].border = parent.bars[i].border or CreateFrame("Frame", nil, parent)
+  parent.bars[i].border:SetPoint("TOPLEFT", parent.bars[i], "TOPLEFT", -2, 2)
+  parent.bars[i].border:SetPoint("BOTTOMRIGHT", parent.bars[i], "BOTTOMRIGHT", 2, -2)
+  parent.bars[i].border:SetFrameLevel(1)
+  parent.bars[i].border:SetBackdrop(bar_border)
+  parent.bars[i].border:SetBackdropBorderColor(0, 0, 0, 1)
+  
+
   parent.bars[i].lowerBar = parent.bars[i].lowerBar or CreateFrame("StatusBar", "ShaguDPSLowerBar" .. i, parent)
   parent.bars[i].lowerBar:SetStatusBarTexture(textures[config.texture] or textures[1])
   parent.bars[i].lowerBar:SetPoint("TOPLEFT", parent, "TOPLEFT", 2, -config.height * (i-1) - 22)
@@ -364,7 +378,7 @@ local function btnEnter()
     GameTooltip:Show()
   end
 
-  this:SetBackdropBorderColor(1,.8,0,1)
+  this:SetBackdropBorderColor(1,.8,0,0)
 end
 
 local function btnLeave()
@@ -372,7 +386,7 @@ local function btnLeave()
     GameTooltip:Hide()
   end
 
-  this:SetBackdropBorderColor(.4,.4,.4,1)
+  this:SetBackdropBorderColor(.4,.4,.4,0)
 end
 
 local function announce(text)
@@ -646,6 +660,7 @@ local function Refresh(self, force, report)
 
       self.bars[bar].textRight:SetText(line)
       self.bars[bar]:Show()
+      self.bars[bar].border:Show()
 
       -- report to chat if flag is set
       if report and i <= 10 then
@@ -765,7 +780,7 @@ local function CreateWindow(wid)
   frame.btnSegment:SetBackdropBorderColor(.4,.4,.4,1)
 
   frame.btnSegment.caption = frame.btnSegment:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
-  frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+  frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
   frame.btnSegment.caption:SetText("Overall")
   frame.btnSegment.caption:SetAllPoints()
   frame.btnSegment.tooltip = { "Select Segment", "|cffffffffOverall, Current" }
@@ -799,7 +814,7 @@ local function CreateWindow(wid)
   frame.btnMode:SetBackdropBorderColor(.4,.4,.4,1)
 
   frame.btnMode.caption = frame.btnMode:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
-  frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+  frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
   frame.btnMode.caption:SetText("Mode: Damage")
   frame.btnMode.caption:SetAllPoints()
   frame.btnMode.tooltip = { "Select Mode", "|cffffffffDamage, DPS, Heal, HPS" }
@@ -875,7 +890,7 @@ local function CreateWindow(wid)
   frame.btnAnnounce.tex:SetWidth(10)
   frame.btnAnnounce.tex:SetHeight(10)
   frame.btnAnnounce.tex:SetPoint("CENTER", 0, 0)
-  frame.btnAnnounce.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\announce")
+  -- frame.btnAnnounce.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\announce")
   frame.btnAnnounce:SetScript("OnEnter", btnEnter)
   frame.btnAnnounce:SetScript("OnLeave", btnLeave)
   frame.btnAnnounce:SetScript("OnClick", function()
@@ -915,7 +930,7 @@ local function CreateWindow(wid)
   frame.btnSettings.tex:SetWidth(10)
   frame.btnSettings.tex:SetHeight(10)
   frame.btnSettings.tex:SetPoint("CENTER", 0, 0)
-  frame.btnSettings.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\settings")
+  -- frame.btnSettings.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\settings")
   frame.btnSettings:SetScript("OnEnter", btnEnter)
   frame.btnSettings:SetScript("OnLeave", btnLeave)
   frame.btnSettings:SetScript("OnClick", function()
@@ -944,7 +959,7 @@ local function CreateWindow(wid)
   frame.btnReset.tex:SetWidth(10)
   frame.btnReset.tex:SetHeight(10)
   frame.btnReset.tex:SetPoint("CENTER", 0, 0)
-  frame.btnReset.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\reset")
+  -- frame.btnReset.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\reset")
   frame.btnReset:SetScript("OnEnter", btnEnter)
   frame.btnReset:SetScript("OnLeave", btnLeave)
   frame.btnReset:SetScript("OnClick", function()
@@ -973,7 +988,7 @@ local function CreateWindow(wid)
   frame.btnWindow.tex:SetPoint("CENTER", 0, 0)
 
   if frame:GetID() == 1 then
-    frame.btnWindow.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\plus")
+    -- frame.btnWindow.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\plus")
     frame.btnWindow.tooltip = {
       "New Window",
       "|cffffffffCreate a new window"
@@ -989,7 +1004,7 @@ local function CreateWindow(wid)
       end
     end)
   else
-    frame.btnWindow.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\minus")
+    -- frame.btnWindow.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\minus")
     frame.btnWindow.tooltip = {
       "Remove Window",
       "|cffffffffDelete this window"

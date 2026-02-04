@@ -13,8 +13,8 @@ StaticPopupDialogs["SHAGUMETER_QUESTION"] = {
 local textures = {
   "Interface\\BUTTONS\\WHITE8X8",
   "Interface\\TargetingFrame\\UI-StatusBar",
-  "Interface\\Tooltips\\UI-Tooltip-Background",
-  "Interface\\Addons\\ShaguDPS\\img\\ToxiUI-g2"
+  "Interface\\Addons\\ShaguDPS\\img\\ToxiUI-g2",
+  "Interface\\Addons\\ShaguDPS\\img\\ToxiUI-g2-ToxiUI-clean"
 }
 
 -- a basic rounding function
