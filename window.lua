@@ -583,6 +583,7 @@ local function Refresh(self, force, report)
   for id, bar in pairs(self.bars) do
     bar.lowerBar:Hide()
     bar:Hide()
+    bar.border:Hide()
   end
 
   -- set view to damage or heal
@@ -779,8 +780,8 @@ local function CreateWindow(wid)
   frame.btnSegment:SetBackdropColor(.2,.2,.2,1)
   frame.btnSegment:SetBackdropBorderColor(.4,.4,.4,1)
 
-  frame.btnSegment.caption = frame.btnSegment:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
-  frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
+  frame.btnSegment.caption = frame.btnSegment:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontHighlight")
+  frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 12)
   frame.btnSegment.caption:SetText("Overall")
   frame.btnSegment.caption:SetAllPoints()
   frame.btnSegment.tooltip = { "Select Segment", "|cffffffffOverall, Current" }
@@ -813,8 +814,8 @@ local function CreateWindow(wid)
   frame.btnMode:SetBackdropColor(.2,.2,.2,1)
   frame.btnMode:SetBackdropBorderColor(.4,.4,.4,1)
 
-  frame.btnMode.caption = frame.btnMode:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
-  frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
+  frame.btnMode.caption = frame.btnMode:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontHighlight")
+  frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 12)
   frame.btnMode.caption:SetText("Mode: Damage")
   frame.btnMode.caption:SetAllPoints()
   frame.btnMode.tooltip = { "Select Mode", "|cffffffffDamage, DPS, Heal, HPS" }
