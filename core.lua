@@ -80,6 +80,7 @@ local config = {
   -- size
   height = 15,
   spacing = 0,
+  fontsize = 10,
 
   -- tracking
   track_all_units = 0,

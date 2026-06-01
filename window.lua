@@ -345,7 +345,7 @@ local function CreateBar(parent, i, background)
   parent.bars[i].classIcon:Hide()
 
   parent.bars[i].textLeft = parent.bars[i].textLeft or parent.bars[i]:CreateFontString("Status", "OVERLAY", "GameFontNormal")
-  parent.bars[i].textLeft:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+  parent.bars[i].textLeft:SetFont(STANDARD_TEXT_FONT, config.fontsize, "THINOUTLINE")
   parent.bars[i].textLeft:SetJustifyH("LEFT")
   parent.bars[i].textLeft:SetFontObject(GameFontWhite)
   parent.bars[i].textLeft:SetParent(parent.bars[i])
@@ -354,7 +354,7 @@ local function CreateBar(parent, i, background)
   parent.bars[i].textLeft:SetPoint("BOTTOMRIGHT", parent.bars[i], "BOTTOMRIGHT", -5, 0)
 
   parent.bars[i].textRight = parent.bars[i].textRight or parent.bars[i]:CreateFontString("Status", "OVERLAY", "GameFontNormal")
-  parent.bars[i].textRight:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+  parent.bars[i].textRight:SetFont(STANDARD_TEXT_FONT, config.fontsize, "THINOUTLINE")
   parent.bars[i].textRight:SetJustifyH("RIGHT")
   parent.bars[i].textRight:SetFontObject(GameFontWhite)
   parent.bars[i].textRight:SetParent(parent.bars[i])
@@ -626,6 +626,10 @@ local function Refresh(self, force, report)
     local bar = i - self.scroll
     if bar >= 1 and bar <= (config[wid].bars or 8) then
       self.bars[bar] = not force and self.bars[bar] or CreateBar(self, bar)
+
+      -- update font size dynamically if changed
+      self.bars[bar].textLeft:SetFont(STANDARD_TEXT_FONT, config.fontsize, "THINOUTLINE")
+      self.bars[bar].textRight:SetFont(STANDARD_TEXT_FONT, config.fontsize, "THINOUTLINE")
 
       -- attach unit and titles to bar
       self.bars[bar].title = self.values.name

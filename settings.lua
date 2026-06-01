@@ -186,7 +186,7 @@ end)
 settings:Hide()
 settings:SetPoint("CENTER", UIParent, "CENTER", 0, 32)
 settings:SetWidth(192)
-settings:SetHeight(216)
+settings:SetHeight(234)
 settings:SetMovable(true)
 settings:EnableMouse(true)
 settings:RegisterForDrag("LeftButton")
@@ -244,6 +244,7 @@ settings:CreateConfig(T("Window"), nil, "header")
 settings:CreateConfig(T("Bar Texture"), "texture", ShaguDPS.textures)
 settings:CreateConfig(T("Bar Height"), "height", "number")
 settings:CreateConfig(T("Bar Spacing"), "spacing", "number")
+settings:CreateConfig(T("Font Size"), "fontsize", "number")
 settings:CreateConfig(T("Pastel Colors"), "pastel", "boolean")
 settings:CreateConfig(T("Show Backdrops"), "backdrop", "boolean")
 settings:CreateConfig(T("Lock Windows"), "lock", "boolean")
@@ -261,6 +262,7 @@ SlashCmdList["SHAGUMETER"] = function(msg, editbox)
     p("  /sdps visible " .. config.visible .. " |cffcccccc- " .. T("Show main window"))
     p("  /sdps height " .. config.height .. " |cffcccccc- " .. T("Bar height"))
     p("  /sdps spacing " .. config.spacing .. " |cffcccccc- " .. T("Bar spacing"))
+    p("  /sdps fontsize " .. config.fontsize .. " |cffcccccc- " .. T("Font size"))
     p("  /sdps trackall " .. config.track_all_units .. " |cffcccccc- " .. T("Track all nearby units"))
     p("  /sdps mergepet " .. config.merge_pets .. " |cffcccccc- " .. T("Merge pets into owner data"))
     p("  /sdps texture " .. config.texture .. " |cffcccccc- " .. T("Set the statusbar texture"))
@@ -315,6 +317,16 @@ SlashCmdList["SHAGUMETER"] = function(msg, editbox)
       p("|cffffcc00Shagu|cffffffffDPS:|cffffddcc " .. T("Bar spacing: ") .. config.spacing)
     else
       p("|cffffcc00Shagu|cffffffffDPS:|cffff5511 " .. string.format(T("Valid Options are 0-%s"), config.height))
+    end
+  elseif strlower(cmd) == "fontsize" then
+    if tonumber(args) then
+      config.fontsize = tonumber(args)
+      ShaguDPS_Config = config
+      window.Refresh(true)
+
+      p("|cffffcc00Shagu|cffffffffDPS:|cffffddcc " .. T("Font size: ") .. config.fontsize)
+    else
+      p("|cffffcc00Shagu|cffffffffDPS:|cffff5511 " .. T("Valid Options are 1-999"))
     end
   elseif strlower(cmd) == "trackall" then
     if tonumber(args) and (tonumber(args) == 1 or tonumber(args) == 0) then
