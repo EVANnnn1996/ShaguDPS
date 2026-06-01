@@ -383,6 +383,7 @@ local function btnEnter()
   end
 
   this:SetBackdropBorderColor(1,.8,0,1)
+  this:SetAlpha(1)
 end
 
 local function btnLeave()
@@ -391,6 +392,13 @@ local function btnLeave()
   end
 
   this:SetBackdropBorderColor(.4,.4,.4,1)
+  if this == this:GetParent().btnAnnounce or 
+     this == this:GetParent().btnSettings or 
+     this == this:GetParent().btnReset or 
+     this == this:GetParent().btnWindow or 
+     this == this:GetParent().btnResize then
+    this:SetAlpha(0)
+  end
 end
 
 local function announce(text)
@@ -791,8 +799,8 @@ local function CreateWindow(wid)
   frame.btnSegment:SetBackdropColor(.2,.2,.2,1)
   frame.btnSegment:SetBackdropBorderColor(.4,.4,.4,1)
 
-  frame.btnSegment.caption = frame.btnSegment:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
-  frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+  frame.btnSegment.caption = frame.btnSegment:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontHighlight")
+  frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
   frame.btnSegment.caption:SetText(T("Overall"))
   frame.btnSegment.caption:SetAllPoints()
   frame.btnSegment.tooltip = { T("Select Segment"), "|cffffffff" .. T("Overall, Current") }
@@ -825,8 +833,8 @@ local function CreateWindow(wid)
   frame.btnMode:SetBackdropColor(.2,.2,.2,1)
   frame.btnMode:SetBackdropBorderColor(.4,.4,.4,1)
 
-  frame.btnMode.caption = frame.btnMode:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
-  frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 9)
+  frame.btnMode.caption = frame.btnMode:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontHighlight")
+  frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 12)
   frame.btnMode.caption:SetText(T("Damage"))
   frame.btnMode.caption:SetAllPoints()
   frame.btnMode.tooltip = { T("Select Mode"), "|cffffffff" .. T("Damage, DPS, Heal, HPS") }
@@ -892,6 +900,7 @@ local function CreateWindow(wid)
   frame.btnAnnounce:SetBackdrop(backdrop)
   frame.btnAnnounce:SetBackdropColor(.2,.2,.2,1)
   frame.btnAnnounce:SetBackdropBorderColor(.4,.4,.4,1)
+  frame.btnAnnounce:SetAlpha(0)
   frame.btnAnnounce.tooltip = {
     T("Send to Chat"),
     { "|cffffffff" .. T("Click"), "|cffaaaaaa" .. T("Ask to anounce all data.")},
@@ -933,6 +942,7 @@ local function CreateWindow(wid)
   frame.btnSettings:SetBackdrop(backdrop)
   frame.btnSettings:SetBackdropColor(.2,.2,.2,1)
   frame.btnSettings:SetBackdropBorderColor(.4,.4,.4,1)
+  frame.btnSettings:SetAlpha(0)
   frame.btnSettings.tooltip = {
     T("Settings"),
     "|cffffffff" .. T("Show Configuration Window")
@@ -961,6 +971,7 @@ local function CreateWindow(wid)
   frame.btnReset:SetBackdrop(backdrop)
   frame.btnReset:SetBackdropColor(.2,.2,.2,1)
   frame.btnReset:SetBackdropBorderColor(.4,.4,.4,1)
+  frame.btnReset:SetAlpha(0)
   frame.btnReset.tooltip = {
     T("Reset Data"),
     { "|cffffffff" .. T("Click"), "|cffaaaaaa" .. T("Ask to reset all data.")},
@@ -993,6 +1004,7 @@ local function CreateWindow(wid)
   frame.btnWindow:SetBackdrop(backdrop)
   frame.btnWindow:SetBackdropColor(.2,.2,.2,1)
   frame.btnWindow:SetBackdropBorderColor(.4,.4,.4,1)
+  frame.btnWindow:SetAlpha(0)
 
   frame.btnWindow.tex = frame.btnWindow:CreateTexture()
   frame.btnWindow.tex:SetWidth(10)
@@ -1039,6 +1051,7 @@ local function CreateWindow(wid)
   frame.btnResize:SetWidth(12)
   frame.btnResize:SetHeight(12)
   frame.btnResize:EnableMouse(1)
+  frame.btnResize:SetAlpha(0)
   frame.btnResize.tex = frame.btnResize:CreateTexture(nil, "BACKGROUND")
   frame.btnResize.tex:SetAllPoints()
   frame.btnResize.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\resize")
