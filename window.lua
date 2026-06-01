@@ -12,6 +12,7 @@ local internals = ShaguDPS.internals
 local textures = ShaguDPS.textures
 local spairs = ShaguDPS.spairs
 local round = ShaguDPS.round
+local T = ShaguDPS.T
 
 -- all known classes
 local classes = {
@@ -120,14 +121,14 @@ local view_templates = {
 -- panel button templates
 local menubuttons = {
   -- segments
-  ["Current"]  = { 0, 1, -25.5, "Current Segment", "|cffffffffShow current fight",      "segment" },
-  ["Overall"]  = { 1, 0, -25.5, "Overall Segment", "|cffffffffShow all fights",         "segment" },
+  ["Current"]  = { 0, 1, -25.5, "Current Segment", "Show current fight",      "segment" },
+  ["Overall"]  = { 1, 0, -25.5, "Overall Segment", "Show all fights",         "segment" },
 
   -- modes
-  ["Damage"]   = { 0, 1, 25.5,  "Damage View",     "|cffffffffShow Damage Done",        "view" },
-  ["DPS"]      = { 1, 2, 25.5,  "DPS View",        "|cffffffffShow Damage Per Second",  "view" },
-  ["Heal"]     = { 2, 3, 25.5,  "Heal View",       "|cffffffffShow Healing Done",       "view" },
-  ["HPS"]      = { 3, 4, 25.5,  "HPS View",        "|cffffffffShow Heal Per Second",    "view" },
+  ["Damage"]   = { 0, 1, 25.5,  "Damage View",     "Show Damage Done",        "view" },
+  ["DPS"]      = { 1, 2, 25.5,  "DPS View",        "Show Damage Per Second",  "view" },
+  ["Heal"]     = { 2, 3, 25.5,  "Heal View",       "Show Healing Done",       "view" },
+  ["HPS"]      = { 3, 4, 25.5,  "HPS View",        "Show Heal Per Second",    "view" },
 }
 
 -- default colors of chat types
@@ -223,21 +224,21 @@ local function barTooltipShow()
   GameTooltip:AddLine(this.title .. ":")
 
   if config[wid].view == 1 or config[wid].view == 2 then
-    GameTooltip:AddDoubleLine("|cffffffffDamage", "|cffffffff" .. value)
-    GameTooltip:AddDoubleLine("|cffffffffDamage Per Second", "|cffffffff" .. persec)
+    GameTooltip:AddDoubleLine("|cffffffff" .. T("Damage"), "|cffffffff" .. value)
+    GameTooltip:AddDoubleLine("|cffffffff" .. T("Damage Per Second"), "|cffffffff" .. persec)
   elseif config[wid].view == 3 or config[wid].view == 4 then
     local evalue = segment[this.unit]["_esum"]
     local epersec = round(evalue / segment[this.unit]["_ctime"], 1)
 
-    GameTooltip:AddDoubleLine("|cffffffffHealing", "|cffffffff" .. evalue)
-    GameTooltip:AddDoubleLine("|cffaaaaaaOverheal", "|cffcc8888+" .. value - evalue)
+    GameTooltip:AddDoubleLine("|cffffffff" .. T("Healing"), "|cffffffff" .. evalue)
+    GameTooltip:AddDoubleLine("|cffaaaaaa" .. T("Overheal"), "|cffcc8888+" .. value - evalue)
     GameTooltip:AddLine(" ")
-    GameTooltip:AddDoubleLine("|cffffffffHealing Per Second", "|cffffffff" .. epersec)
-    GameTooltip:AddDoubleLine("|cffaaaaaaOverheal Per Second", "|cffcc8888+" .. persec - epersec)
+    GameTooltip:AddDoubleLine("|cffffffff" .. T("Healing Per Second"), "|cffffffff" .. epersec)
+    GameTooltip:AddDoubleLine("|cffaaaaaa" .. T("Overheal Per Second"), "|cffcc8888+" .. persec - epersec)
   end
 
   GameTooltip:AddLine(" ")
-  GameTooltip:AddLine("Details:")
+  GameTooltip:AddLine(T("Details:"))
 
   for attack, damage in spairs(segment[this.unit], sort_algorithms.single_spell) do
     if attack and not internals[attack] then
@@ -558,24 +559,24 @@ local function Refresh(self, force, report)
     -- update panel button appearance
     if config[wid].view == 1 then
       self.btnDamage.caption:SetTextColor(1,.9,0,1)
-      self.btnMode.caption:SetText("Damage")
+      self.btnMode.caption:SetText(T("Damage"))
     elseif config[wid].view == 2 then
       self.btnDPS.caption:SetTextColor(1,.9,0,1)
-      self.btnMode.caption:SetText("DPS")
+      self.btnMode.caption:SetText(T("DPS"))
     elseif config[wid].view == 3 then
       self.btnHeal.caption:SetTextColor(1,.9,0,1)
-      self.btnMode.caption:SetText("Heal")
+      self.btnMode.caption:SetText(T("Heal"))
     elseif config[wid].view == 4 then
       self.btnHPS.caption:SetTextColor(1,.9,0,1)
-      self.btnMode.caption:SetText("HPS")
+      self.btnMode.caption:SetText(T("HPS"))
     end
 
     if config[wid].segment == 0 then
       self.btnOverall.caption:SetTextColor(1,.9,0,1)
-      self.btnSegment.caption:SetText("Overall")
+      self.btnSegment.caption:SetText(T("Overall"))
     elseif config[wid].segment == 1 then
       self.btnCurrent.caption:SetTextColor(1,.9,0,1)
-      self.btnSegment.caption:SetText("Current")
+      self.btnSegment.caption:SetText(T("Current"))
     end
 
     self:SetWidth((config[wid].width or 177))
@@ -607,8 +608,8 @@ local function Refresh(self, force, report)
   -- report to chat if flag is set
   if report then
     local name = view_templates[config[wid].view].name
-    local seg = config[wid].segment == 1 and "Current" or "Overall"
-    announce("ShaguDPS - " .. seg .. " " .. name .. ":")
+    local seg = config[wid].segment == 1 and T("Current") or T("Overall")
+    announce(string.format(T("ShaguDPS - %s %s:"), seg, T(name)))
   end
 
   -- load caps of the current view
@@ -788,9 +789,9 @@ local function CreateWindow(wid)
 
   frame.btnSegment.caption = frame.btnSegment:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
   frame.btnSegment.caption:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
-  frame.btnSegment.caption:SetText("Overall")
+  frame.btnSegment.caption:SetText(T("Overall"))
   frame.btnSegment.caption:SetAllPoints()
-  frame.btnSegment.tooltip = { "Select Segment", "|cffffffffOverall, Current" }
+  frame.btnSegment.tooltip = { T("Select Segment"), "|cffffffff" .. T("Overall, Current") }
   frame.btnSegment:SetScript("OnEnter", btnEnter)
   frame.btnSegment:SetScript("OnLeave", btnLeave)
   frame.btnSegment:SetScript("OnClick", function()
@@ -822,9 +823,9 @@ local function CreateWindow(wid)
 
   frame.btnMode.caption = frame.btnMode:CreateFontString("ShaguDPSTitle", "OVERLAY", "GameFontWhite")
   frame.btnMode.caption:SetFont(STANDARD_TEXT_FONT, 9)
-  frame.btnMode.caption:SetText("Mode: Damage")
+  frame.btnMode.caption:SetText(T("Damage"))
   frame.btnMode.caption:SetAllPoints()
-  frame.btnMode.tooltip = { "Select Mode", "|cffffffffDamage, DPS, Heal, HPS" }
+  frame.btnMode.tooltip = { T("Select Mode"), "|cffffffff" .. T("Damage, DPS, Heal, HPS") }
   frame.btnMode:SetScript("OnEnter", btnEnter)
   frame.btnMode:SetScript("OnLeave", btnLeave)
   frame.btnMode:SetScript("OnClick", function()
@@ -862,9 +863,9 @@ local function CreateWindow(wid)
 
     button.caption = button:CreateFontString("ShaguDPS"..name.."Title", "OVERLAY", "GameFontWhite")
     button.caption:SetFont(STANDARD_TEXT_FONT, 9)
-    button.caption:SetText(name)
+    button.caption:SetText(T(name))
     button.caption:SetAllPoints()
-    button.tooltip = { template[4], template[5] }
+    button.tooltip = { T(template[4]), "|cffffffff" .. T(template[5]) }
     button:SetScript("OnEnter", btnEnter)
     button:SetScript("OnLeave", btnLeave)
     button:SetScript("OnClick", function()
@@ -888,9 +889,9 @@ local function CreateWindow(wid)
   frame.btnAnnounce:SetBackdropColor(.2,.2,.2,1)
   frame.btnAnnounce:SetBackdropBorderColor(.4,.4,.4,1)
   frame.btnAnnounce.tooltip = {
-    "Send to Chat",
-    { "|cffffffffClick", "|cffaaaaaaAsk to anounce all data."},
-    { "|cffffffffShift-Click", "|cffaaaaaaAnnounce all data."},
+    T("Send to Chat"),
+    { "|cffffffff" .. T("Click"), "|cffaaaaaa" .. T("Ask to anounce all data.")},
+    { "|cffffffff" .. T("Shift-Click"), "|cffaaaaaa" .. T("Announce all data.")},
   }
 
   frame.btnAnnounce.tex = frame.btnAnnounce:CreateTexture()
@@ -910,7 +911,7 @@ local function CreateWindow(wid)
       if not color then color = "|cff00FAF6" end
 
       local name = view_templates[config[frame:GetID()].view].name
-      local text = "Post |cffffdd00" .. name .. "|r data into /" .. color..string.lower(ctype) .. "|r?"
+      local text = string.format(T("Post %s data into /%s?"), T(name), color..string.lower(ctype))
 
       local dialog = StaticPopupDialogs["SHAGUMETER_QUESTION"]
       dialog.text = text
@@ -929,8 +930,8 @@ local function CreateWindow(wid)
   frame.btnSettings:SetBackdropColor(.2,.2,.2,1)
   frame.btnSettings:SetBackdropBorderColor(.4,.4,.4,1)
   frame.btnSettings.tooltip = {
-    "Settings",
-    "|cffffffffShow Configuration Window"
+    T("Settings"),
+    "|cffffffff" .. T("Show Configuration Window")
   }
 
   frame.btnSettings.tex = frame.btnSettings:CreateTexture()
@@ -957,9 +958,9 @@ local function CreateWindow(wid)
   frame.btnReset:SetBackdropColor(.2,.2,.2,1)
   frame.btnReset:SetBackdropBorderColor(.4,.4,.4,1)
   frame.btnReset.tooltip = {
-    "Reset Data",
-    { "|cffffffffClick", "|cffaaaaaaAsk to reset all data."},
-    { "|cffffffffShift-Click", "|cffaaaaaaReset all data."},
+    T("Reset Data"),
+    { "|cffffffff" .. T("Click"), "|cffaaaaaa" .. T("Ask to reset all data.")},
+    { "|cffffffff" .. T("Shift-Click"), "|cffaaaaaa" .. T("Reset all data.")},
   }
 
   frame.btnReset.tex = frame.btnReset:CreateTexture()
@@ -974,7 +975,7 @@ local function CreateWindow(wid)
       ResetData()
     else
       local dialog = StaticPopupDialogs["SHAGUMETER_QUESTION"]
-      dialog.text = "Do you wish to reset the data?"
+      dialog.text = T("Do you wish to reset the data?")
       dialog.OnAccept = ResetData
       StaticPopup_Show("SHAGUMETER_QUESTION")
     end
@@ -997,8 +998,8 @@ local function CreateWindow(wid)
   if frame:GetID() == 1 then
     frame.btnWindow.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\plus")
     frame.btnWindow.tooltip = {
-      "New Window",
-      "|cffffffffCreate a new window"
+      T("New Window"),
+      "|cffffffff" .. T("Create a new window")
     }
 
     frame.btnWindow:SetScript("OnClick", function()
@@ -1013,8 +1014,8 @@ local function CreateWindow(wid)
   else
     frame.btnWindow.tex:SetTexture("Interface\\AddOns\\ShaguDPS" .. (tbc and "-tbc" or "") .. "\\img\\minus")
     frame.btnWindow.tooltip = {
-      "Remove Window",
-      "|cffffffffDelete this window"
+      T("Remove Window"),
+      "|cffffffff" .. T("Delete this window")
     }
 
     frame.btnWindow:SetScript("OnClick", function()

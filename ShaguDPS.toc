@@ -9,6 +9,10 @@
 # main
 core.lua
 
+# locales
+locales_enUS.lua
+locales_zhCN.lua
+
 # parser
 parser.lua
 parser-vanilla.lua

@@ -1,0 +1,99 @@
+ShaguDPS.locales["enUS"] = {
+  -- Mode / segment names
+  ["Damage"] = "Damage",
+  ["DPS"] = "DPS",
+  ["Heal"] = "Heal",
+  ["HPS"] = "HPS",
+  ["Current"] = "Current",
+  ["Overall"] = "Overall",
+
+  -- Menu button tooltips (titles)
+  ["Current Segment"] = "Current Segment",
+  ["Overall Segment"] = "Overall Segment",
+  ["Damage View"] = "Damage View",
+  ["DPS View"] = "DPS View",
+  ["Heal View"] = "Heal View",
+  ["HPS View"] = "HPS View",
+
+  -- Menu button tooltips (descriptions)
+  ["Show current fight"] = "Show current fight",
+  ["Show all fights"] = "Show all fights",
+  ["Show Damage Done"] = "Show Damage Done",
+  ["Show Damage Per Second"] = "Show Damage Per Second",
+  ["Show Healing Done"] = "Show Healing Done",
+  ["Show Heal Per Second"] = "Show Heal Per Second",
+
+  -- Header buttons
+  ["Select Segment"] = "Select Segment",
+  ["Overall, Current"] = "Overall, Current",
+  ["Select Mode"] = "Select Mode",
+  ["Damage, DPS, Heal, HPS"] = "Damage, DPS, Heal, HPS",
+
+  -- Action buttons
+  ["Send to Chat"] = "Send to Chat",
+  ["Click"] = "Click",
+  ["Ask to anounce all data."] = "Ask to anounce all data.",
+  ["Shift-Click"] = "Shift-Click",
+  ["Announce all data."] = "Announce all data.",
+  ["Settings"] = "Settings",
+  ["Show Configuration Window"] = "Show Configuration Window",
+  ["Reset Data"] = "Reset Data",
+  ["Ask to reset all data."] = "Ask to reset all data.",
+  ["Reset all data."] = "Reset all data.",
+  ["New Window"] = "New Window",
+  ["Create a new window"] = "Create a new window",
+  ["Remove Window"] = "Remove Window",
+  ["Delete this window"] = "Delete this window",
+
+  -- Popup dialogs
+  ["Do you wish to reset the data?"] = "Do you wish to reset the data?",
+  ["Post %s data into /%s?"] = "Post |cffffdd00%s|r data into /%s|r?",
+  ["ShaguDPS - %s %s:"] = "ShaguDPS - %s %s:",
+
+  -- Bar tooltip labels
+  ["Damage:"] = "Damage",
+  ["Damage Per Second"] = "Damage Per Second",
+  ["Healing"] = "Healing",
+  ["Overheal"] = "Overheal",
+  ["Healing Per Second"] = "Healing Per Second",
+  ["Overheal Per Second"] = "Overheal Per Second",
+  ["Details:"] = "Details:",
+
+  -- Settings panel headers / labels
+  ["Parser"] = "Parser",
+  ["Track All Nearby Units"] = "Track All Nearby Units",
+  ["Merge Pets With Owner"] = "Merge Pets With Owner",
+  ["Window"] = "Window",
+  ["Bar Texture"] = "Bar Texture",
+  ["Bar Height"] = "Bar Height",
+  ["Bar Spacing"] = "Bar Spacing",
+  ["Pastel Colors"] = "Pastel Colors",
+  ["Show Backdrops"] = "Show Backdrops",
+  ["Lock Windows"] = "Lock Windows",
+  ["Select"] = "Select",
+
+  -- Slash help
+  ["Show main window"] = "Show main window",
+  ["Bar height"] = "Bar height",
+  ["Bar spacing"] = "Bar spacing",
+  ["Track all nearby units"] = "Track all nearby units",
+  ["Merge pets into owner data"] = "Merge pets into owner data",
+  ["Set the statusbar texture"] = "Set the statusbar texture",
+  ["Use pastel colors"] = "Use pastel colors",
+  ["Show window backdrop and border"] = "Show window backdrop and border",
+  ["Lock window"] = "Lock window",
+  ["Toggle window"] = "Toggle window",
+  ["Visible: "] = "Visible: ",
+  ["Lock: "] = "Lock: ",
+  ["Bar height: "] = "Bar height: ",
+  ["Bar spacing: "] = "Bar spacing: ",
+  ["Track all units: "] = "Track all units: ",
+  ["Merge pet: "] = "Merge pet: ",
+  ["Texture: "] = "Texture: ",
+  ["Use pastel colors: "] = "Use pastel colors: ",
+  ["Show window backdrop: "] = "Show window backdrop: ",
+  ["Valid Options are 0-1"] = "Valid Options are 0-1",
+  ["Valid Options are 1-999"] = "Valid Options are 1-999",
+  ["Valid Options are 0-%s"] = "Valid Options are 0-%s",
+  ["Valid Options are 1-%s"] = "Valid Options are 1-%s",
+}

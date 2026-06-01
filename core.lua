@@ -1,5 +1,19 @@
 ShaguDPS = {}
 
+ShaguDPS.locales = {}
+
+local function T(key)
+  local locale = GetLocale and GetLocale() or "enUS"
+  local entries = ShaguDPS.locales[locale] or ShaguDPS.locales["enUS"]
+  if entries and entries[key] then return entries[key] end
+  if ShaguDPS.locales["enUS"] and ShaguDPS.locales["enUS"][key] then
+    return ShaguDPS.locales["enUS"][key]
+  end
+  return key
+end
+
+ShaguDPS.T = T
+
 -- initialize default question dialog
 StaticPopupDialogs["SHAGUMETER_QUESTION"] = {
   button1 = YES,
